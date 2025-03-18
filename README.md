@@ -1,3 +1,6 @@
+username: a@gmail.com
+pass: a
+
 Applicant Management System Documentation
 This report provides an overview of the functionality and implementation of an Applicant Management System built using PHP, MySQL, HTML, and Bootstrap. The system includes features for displaying a list of applicants, searching, deleting records, and enabling applicants to apply through a web form.
 
