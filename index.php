@@ -1,0 +1,148 @@
+<?php
+session_start(); // Start the session to track user authentication messages
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        input, textarea, select, button {
+            border: none !important; 
+            outline: none !important;
+        }
+
+        /* Add a custom focus style if needed, for example, a subtle shadow or background color change */
+        input:focus, 
+        textarea:focus, 
+        select:focus, 
+        button:focus {
+            box-shadow: none !important;
+            border-bottom: 2px solid black !important;
+            
+        }
+
+        @media screen and (min-width: 992px) {
+            .container{
+                width: 800px;
+            }
+        }
+         body {
+            font-family: "poppins", sans-serif;
+            background-color: darkgray;
+
+         }
+
+        .form-control {
+            border-radius: 0 !important;
+            background-color: #e1c9a642;
+            border-bottom: 2px solid black !important;
+        }
+
+        
+    </style>
+        <script type="text/javascript">
+        // Disable back and forward navigation
+      function preventBack(){
+         window.history.forward();
+      } setTimeout("preventBack()",0);
+      
+      window.onunload = function(){
+         null;
+      }
+      
+    </script>
+</head>
+
+<body>
+
+<?php
+        if(isset($_SESSION['registerMessage'])){
+            $registerMessage = $_SESSION['registerMessage'];
+            $registerMessageType = $_SESSION['registerMessageType'];
+            
+            $alertClassRegister = ($registerMessageType == "success") ? "alert-success" : "alert-danger";
+
+            // Echo the alert HTML for the session message
+            echo "
+                <div class='alert $alertClassRegister' id='registerMessage'>
+                    $registerMessage
+                </div>
+            ";
+
+            // Pass session variables to JavaScript for handling
+            echo "<script>
+                var registerMessage = '$registerMessage';
+                var registerMessageType = '$registerMessageType';
+            </script>";
+
+            // Clear the session messages after displaying
+            unset($_SESSION['registerMessage']);
+            unset($_SESSION['registerMessageType']);
+        }
+    ?>
+
+
+<?php
+    // Display authentication message if available
+    if(isset($_SESSION['authenticationMessage']) && !empty($_SESSION['authenticationMessage'])){
+        $authenticationMessage = $_SESSION['authenticationMessage'];
+        $authenticationMsgType = $_SESSION['authenticationMsgType'];
+        $alertClassLogin = ($authenticationMsgType == "success") ? "alert-success" : "alert-danger";
+        
+        echo "
+            <div class='alert $alertClassLogin' id='authenticationMessage'>
+                $authenticationMessage
+            </div>
+        ";
+
+        // Clear session message after displaying it
+        unset($_SESSION['authenticationMessage']);
+        unset($_SESSION['authenticationMsgType']);
+    }
+?>
+
+
+<div class="container bg-dark p-3" style="margin-top: 9%;">
+
+    <div class="row">
+                <!-- Image Section -->
+                <div class="col-md-6 image-section text-center mb-4 mb-md-0">
+                    <img src="./1.png" alt="image" class="img-fluid" style="height: 100%;">
+                </div>
+
+                <!-- Form Section -->
+                <div class="col-md-6">
+                    <form action="authentication.php" method="POST" style="background-color: white; padding: 30px">
+                        <div class="text-center mb-4">
+                            <img src="./logo2.png" alt="logo" class="img-fluid">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Enter Email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password" required>
+                        </div>
+
+                        <div class="mb-3 text-center">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+     <!-- Script file -->
+     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
